@@ -1,3 +1,35 @@
+
+#######################  Libraries ########################################
+
+library(Rfast)
+library(parallel) ## Using forking for prallelising, may not work properly on windows
+library(pbapply)
+library(dplyr)
+library(caret)
+library(reshape2)
+library(data.table)
+library(ggdark)
+library(stringr)
+
+library(gridExtra)
+
+library(mvtnorm)
+require(Rcpp)
+require(microbenchmark)
+library(dplyr)
+library(caret)
+library(reshape2)
+library(data.table)
+library(ggdark)
+library(gridExtra)
+library (matrixStats)
+library(lemon)
+library(MASS)
+library(compiler)
+library(kernlab)
+
+
+
 #########################     Helper function   ####################################
 
 mult = function (m,s, l = 100){
@@ -50,7 +82,7 @@ gp_draw <- function(draws, mu, Sigma, ...) {
   mvtnorm::rmvnorm(draws, mu, Sigma)
 }
 
-#############################################################
+#########################   Loading Paremeters and Data  ################################
 
 
 setwd("/Users/diptarka/Work/BNN_Research/BNNLiu/example") 
@@ -60,9 +92,7 @@ X = readRDS("train_X.rds") #Training data
 
 
 
-############   Main Function (using MC) : input -> paramers, training data 
-############   output ->  asymptotic mean and covariance matrix of 
-############              the feature sensitivies at the provided points ##########
+############   Main Function (using MC)  ##########
 
 sens = function(params, X, l = 100){
   
@@ -138,7 +168,7 @@ resp = sens(params, X)
 Sigma = (resp$covar)
 M = resp$means
 
-########  plotting the GP for any particular feature #########
+########  Plotting the GP for any particular feature #########
 
 i = 1
 
